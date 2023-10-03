@@ -34,7 +34,7 @@ double const tolerance = .2;
 
 int main(int argc, char *argv[])
 {
-    double triangle, circle, x_button, square;
+    int triangle, circle, x_button, square;
     double ax, ay, az, gx, gy, gz;
 
     // Expected G values for top
@@ -69,9 +69,10 @@ int main(int argc, char *argv[])
     
 
     while (1)
+    // for (int i = 0; i<630; i++)
     {
         // a for acceleration, g for gyro, button
-        scanf("%lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf, %lf",
+        scanf("%lf, %lf, %lf, %lf, %lf, %lf, %d, %d, %d, %d",
               &ax, &ay, &az, &gx, &gy, &gz, &triangle, &circle, &x_button, &square);
         // printf("%lf", triangle);
 
@@ -109,7 +110,6 @@ int main(int argc, char *argv[])
             // check back
             if(checkPos(gx, gy, gz, xValueBack, yValueBack, zValueBack)){
                 currOrientation = 5;
-                
             }
 
         //}
@@ -117,6 +117,8 @@ int main(int argc, char *argv[])
         if(triangle == 1.0){
             break;
         }
+
+        // masterOrientation = checkOrientation(currOrientation);
 
         if(currOrientation!=masterOrientation){
             //printf("%d",currOrientation);
@@ -168,6 +170,8 @@ double magnitude(double x, double y, double z)
     double magnitudeSquare = pow(x, 2) + pow(y, 2) + pow(z, 2);
     return sqrt(magnitudeSquare);
 }
+
+
 
 int closeTo(double tolerance, double point, double value){
     double toleranceValLow = value-tolerance;
