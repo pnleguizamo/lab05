@@ -29,6 +29,7 @@
 int closeTo(double tolerance, double point, double value);
 int checkPos(double gx, double gy, double gz, double xValue, double yValue, double zValue);
 double magnitude(double x, double y, double z);
+int checkOrientation(int currOrientation, int masterOrientation);
 
 double const tolerance = .2;
 
@@ -42,29 +43,34 @@ int main(int argc, char *argv[])
     double yValueTop = 0.98;
     double zValueTop = 0.22;
 
+    // Expected G values for Bottom
     double xValueBottom = 0.02;
     double yValueBottom = -0.98;
     double zValueBottom = -0.08;
-    
+
+    // Expected G values for left
     double xValueLeft = 0.98;
     double yValueLeft = 0.11;
     double zValueLeft = 0.05;
 
+    // Expected G values for Right
     double xValueRight = -0.98;
     double yValueRight = 0.11;
     double zValueRight = 0.06;
 
+    // Expected G values for Front
     double xValueFront = 0.02;
     double yValueFront = 0.42;
     double zValueFront = -0.9;
     
+    // Expected G values for Back
     double xValueBack = .005;
     double yValueBack = -0.115;
     double zValueBack = 0.99;
 
     int currOrientation;
     int masterOrientation = 0; 
-    int switchVar = 0;
+    // int switchVar = 0;
 
     
 
@@ -118,38 +124,8 @@ int main(int argc, char *argv[])
             break;
         }
 
-        // masterOrientation = checkOrientation(currOrientation);
+        masterOrientation = checkOrientation(currOrientation, masterOrientation);
 
-        if(currOrientation!=masterOrientation){
-            //printf("%d",currOrientation);
-            if(currOrientation == 0){
-                printf("Top\n");
-            }    
-            if(currOrientation == 1){
-                printf("Bottom\n");
-            }  
-            if(currOrientation == 2){
-                printf("Left\n");
-            }  
-            if(currOrientation == 3){
-                printf("Right\n");
-            }  
-            if(currOrientation == 4){
-                printf("Front\n");
-            }  
-            if(currOrientation == 5){
-                printf("Back\n");
-            }  
-            masterOrientation = currOrientation;
-        }
-        else{
-            continue;
-        }
-            
-        
-
-        
-        
         /* It would be wise (mainly save time) if you copy your code to calculate
          * the magnitude from lab03-1.c. You will also need to copy your
          * prototypes and functions to the appropriate sections in this program. */
@@ -171,7 +147,32 @@ double magnitude(double x, double y, double z)
     return sqrt(magnitudeSquare);
 }
 
-
+int checkOrientation(int currOrientation, int masterOrientation){
+    if(currOrientation!=masterOrientation){
+            //printf("%d",currOrientation);
+            if(currOrientation == 0){
+                printf("Top\n");
+            }    
+            if(currOrientation == 1){
+                printf("Bottom\n");
+            }  
+            if(currOrientation == 2){
+                printf("Left\n");
+            }  
+            if(currOrientation == 3){
+                printf("Right\n");
+            }  
+            if(currOrientation == 4){
+                printf("Front\n");
+            }  
+            if(currOrientation == 5){
+                printf("Back\n");
+            }  
+            masterOrientation = currOrientation;
+        }
+        
+        return masterOrientation;
+}
 
 int closeTo(double tolerance, double point, double value){
     double toleranceValLow = value-tolerance;
