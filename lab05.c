@@ -77,6 +77,7 @@ int main(int argc, char *argv[])
 
     while (1)
     // for (int i = 0; i<630; i++)
+    // for loop for use with CSVs
     {
         // a for acceleration, g for gyro, button
         scanf("%lf, %lf, %lf, %lf, %lf, %lf, %d, %d, %d, %d",
@@ -222,28 +223,28 @@ int checkPos(double gx, double gy, double gz, double xValue, double yValue, doub
 
 }
 
-int isBottom(double gx, double gy, double gz){
+// int isBottom(double gx, double gy, double gz){
     
-    double xValue = 0.02;
-    double yValue = -0.98;
-    double zValue = -0.08;
-    int count = 0;
+//     double xValue = 0.02;
+//     double yValue = -0.98;
+//     double zValue = -0.08;
+//     int count = 0;
     
-    if(closeTo(toleranceGyro, gx, xValue)){
-        // printf("%lf\n", gx);
-        count++;
-    }
-    if(closeTo(toleranceGyro, gy, yValue)){
-        // printf("%lf\n", gx);
-        count++;
-    }
-    if(closeTo(toleranceGyro, gz, zValue)){
-        // printf("%lf\n", gz);
-        count++;
-    }
-    if(count==3){
-        return 1;
+//     if(closeTo(toleranceGyro, gx, xValue)){
+//         // printf("%lf\n", gx);
+//         count++;
+//     }
+//     if(closeTo(toleranceGyro, gy, yValue)){
+//         // printf("%lf\n", gx);
+//         count++;
+//     }
+//     if(closeTo(toleranceGyro, gz, zValue)){
+//         // printf("%lf\n", gz);
+//         count++;
+//     }
+//     if(count==3){
+//         return 1;
 
-    }
+//     }
 
-}
+// }
