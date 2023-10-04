@@ -28,10 +28,11 @@
 
 int closeTo(double tolerance, double point, double value);
 int checkPos(double gx, double gy, double gz, double xValue, double yValue, double zValue);
-double magnitude(double x, double y, double z);
-int checkOrientation(int currOrientation, int masterOrientation);
+int magnitude(double x, double y, double z);
+int checkOrientation(int currOrientation, int masterOrientation, int magnitudeBool);
 
-double const tolerance = .2;
+double const toleranceGyro = .2;
+double const toleranceAccel = .5;
 
 int main(int argc, char *argv[])
 {
@@ -87,6 +88,7 @@ int main(int argc, char *argv[])
         printf("Echoing output: %lf, %lf, %lf, %lf, %lf, %lf, %d, %d, %d, %d \n",
                ax, ay, az, gx, gy, gz, triangle, circle, x_button, square);
 
+        
         // if(switchVar == 1){
             // Check top
             if(checkPos(gx, gy, gz, xValueTop, yValueTop, zValueTop)){
@@ -124,7 +126,7 @@ int main(int argc, char *argv[])
             break;
         }
 
-        masterOrientation = checkOrientation(currOrientation, masterOrientation);
+        masterOrientation = checkOrientation(currOrientation, masterOrientation, magnitude(ax, ay, az));
 
         /* It would be wise (mainly save time) if you copy your code to calculate
          * the magnitude from lab03-1.c. You will also need to copy your
@@ -140,15 +142,22 @@ int main(int argc, char *argv[])
 
 // Check current position against knowns
 
-double magnitude(double x, double y, double z)
+int magnitude(double x, double y, double z)
 {
     // Step 8, uncomment and modify the next line
     double magnitudeSquare = pow(x, 2) + pow(y, 2) + pow(z, 2);
-    return sqrt(magnitudeSquare);
+    if(closeTo(toleranceAccel, magnitudeSquare, 0)){
+        return 1;
+    }
+    else{
+        printf("Too fast\n");
+        return 0;
+    }
+    // return sqrt(magnitudeSquare);
 }
 
-int checkOrientation(int currOrientation, int masterOrientation){
-    if(currOrientation!=masterOrientation){
+int checkOrientation(int currOrientation, int masterOrientation, int magnitudeBool){
+    if(currOrientation!=masterOrientation && magnitudeBool){
             //printf("%d",currOrientation);
             if(currOrientation == 0){
                 printf("Top\n");
@@ -194,7 +203,7 @@ int closeTo(double tolerance, double point, double value){
 int checkPos(double gx, double gy, double gz, double xValue, double yValue, double zValue){
     int count = 0;
     
-    if(closeTo(tolerance, gx, xValue) && closeTo(tolerance, gy, yValue) && closeTo(tolerance, gz, zValue)){
+    if(closeTo(toleranceGyro, gx, xValue) && closeTo(toleranceGyro, gy, yValue) && closeTo(toleranceGyro, gz, zValue)){
         // printf("%lf\n", gx);
         return 1;
     }
@@ -220,15 +229,15 @@ int isBottom(double gx, double gy, double gz){
     double zValue = -0.08;
     int count = 0;
     
-    if(closeTo(tolerance, gx, xValue)){
+    if(closeTo(toleranceGyro, gx, xValue)){
         // printf("%lf\n", gx);
         count++;
     }
-    if(closeTo(tolerance, gy, yValue)){
+    if(closeTo(toleranceGyro, gy, yValue)){
         // printf("%lf\n", gx);
         count++;
     }
-    if(closeTo(tolerance, gz, zValue)){
+    if(closeTo(toleranceGyro, gz, zValue)){
         // printf("%lf\n", gz);
         count++;
     }
